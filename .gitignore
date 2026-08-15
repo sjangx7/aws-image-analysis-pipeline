@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Environment variables / credentials
+.env
+.env.*
+*.pem
+*.key
+
+# AWS local configuration
+.aws/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test images
+test-images/
+*.jfif
+
+# Logs
+*.log
+logs/

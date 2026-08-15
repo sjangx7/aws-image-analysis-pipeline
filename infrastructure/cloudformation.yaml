@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: >
+  Infrastructure for an event-driven AWS image analysis pipeline.
+  Creates an Amazon S3 bucket for image storage and an Amazon SQS queue
+  for asynchronous image-processing events.
+
+Parameters:
+  ProjectSuffix:
+    Type: String
+    Default: demo
+    Description: Unique suffix used when naming project resources
+
+Resources:
+
+  ImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "image-analysis-${ProjectSuffix}-${AWS::AccountId}"
+
+  ImageQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub "image-analysis-queue-${ProjectSuffix}"
+      VisibilityTimeout: 60
+
+Outputs:
+
+  BucketName:
+    Description: Name of the S3 bucket used to store uploaded images
+    Value: !Ref ImageBucket
+
+  QueueURL:
+    Description: URL of the SQS queue used for image-processing events
+    Value: !Ref ImageQueue
+
+  QueueARN:
+    Description: ARN of the SQS queue
+    Value: !GetAtt ImageQueue.Arn
